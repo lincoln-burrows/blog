@@ -11,13 +11,19 @@ package com.eungsoo.blog.controller;
 public class HomeController {
     @GetMapping("/")
 
-    public String home1(){
-//    public String home(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-//        model.addAttribute("username", userDetails.getUsername());
-//
-//        if (userDetails.getUser().getRole() == UserRoleEnum.ADMIN) {
-//            model.addAttribute("admin_role", true);
-//        }
+
+    public String home(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        if (userDetails==null) {
+//            System.out.println(model);
+//            System.out.println(userDetails);
+            return "index";
+        }
+
+        model.addAttribute("username", userDetails.getUsername());
+
+        if (userDetails.getUser().getRole() == UserRoleEnum.ADMIN) {
+            model.addAttribute("admin_role", true);
+        }
 
         return "index";
     }
