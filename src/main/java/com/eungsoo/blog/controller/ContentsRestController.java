@@ -8,6 +8,7 @@ import com.eungsoo.blog.service.ContentsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -21,6 +22,7 @@ public class ContentsRestController {
     @GetMapping("/api/contents")
     public List<Contents> getContents() {
         return ContentsRepository.findAllByOrderByCreatedAtDesc();
+
     }
 
     // 게시글 특정 조회

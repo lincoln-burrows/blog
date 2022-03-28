@@ -23,6 +23,7 @@
                 url: "/api/contents",
                 data: {},
                 success: function (response) {
+                    console.log(response);
                     for (let i = 0; i < response.length; i++) {
                         let post = response[i];
                         let id = post.id;
