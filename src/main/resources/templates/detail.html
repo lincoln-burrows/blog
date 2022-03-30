@@ -36,6 +36,27 @@
                 }
             });
         }
+        //서버단에서 댓글 불러오기
+        // function getComments() {
+        //     $('#cards-box').empty();
+        //     let idx = location.href.split("id=")[1]; //localhost/detail.html?id=12
+        //     $.ajax({
+        //         type: "GET",
+        //         url: `/api/contents/${idx}`,
+        //         data: {},
+        //         success: function (response) {
+        //             let post = response;
+        //             let id = post.id;
+        //             let name = post.name;
+        //             let title = post.title;
+        //             let contents = post.contents;
+        //             let modifiedAt = post.modifiedAt;
+        //             let username = post.username;
+        //             addHTML(id, name, title, contents, modifiedAt, username);
+        //         }
+        //     });
+
+
 
         // 불러온 게시글을 html에 붙여줍니다.
         function addHTML(id, name, title, contents, modifiedAt, username) {
@@ -45,7 +66,7 @@
 
         // 게시글 형태를 만들어줍니다.
         function makeMessage(id, name, title, contents, modifiedAt, username) {
-            return `<a href="detail.html?id=${id}">
+            return `<a>
                         <div class="card">
                             <div class="metadata">
                                <div ${id}="${id}-username" class="username">
@@ -61,6 +82,44 @@
                         </div>
                     </div>`;
         }
+
+        function writeComments() {
+
+            let comments = $('#comments').val();
+            let username = "[[${username}]]";
+            // let username = $('#usernamez').val();
+            // let username = <span th:text="${username}"></span>
+            // /*<![CDATA[*/let username = "[[${username}]]";/*]]>*/
+            let title = $('#title').val();
+
+
+            if (isValidContents(comments) == false) {
+                return;
+            }
+            if (isValidContents(username) == false) {
+                return;
+            }
+            if (isValidContents(title) == false) {
+                return;
+            }
+
+            let data = {'title': title, 'username': username, 'contents': contents};
+            $.ajax({
+                type: "POST",
+                url: "/api/contents",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (response) {
+                    alert('메시지가 성공적으로 작성되었습니다.');
+                    location.href = '/';
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
+                }
+            });
+        }
+
 
     </script>
 
@@ -233,6 +292,7 @@
     <div class="header">
         <h2>항해99 바다 위 대나무숲<br><br>
             맘껏 외치세요 무야호!</h2>
+        <span th:text="${username}"></span> 님의
     </div>
 
     <div id="cards-box" class="area-read">
@@ -247,16 +307,25 @@
                 </div>
             </div>
             <!-- contents 조회영역-->
-            <h2>asd</h2>
-            <div class="contents">
-                <div id="1-contents" class="text">
-                    dsafnkalfklewakflekelafkleajfkleafkldsankflenwaklfnekwlafneklwanfkelawnfkelanfkleanfklew
-                </div>
-                <div id="1-editarea" class="edit">
-                    <!--  <textarea id="1-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>-->
-                </div>
-            </div>
+            <!--            <h2>asd</h2>-->
+            <!--            <div class="contents">-->
+            <!--                <div id="1-contents" class="text">-->
+            <!--                    dsafnkalfklewakflekelafkleajfkleafkldsankflenwaklfnekwlafneklwanfkelawnfkelanfkleanfklew-->
+            <!--                </div>-->
+            <!--                <div id="1-editarea" class="edit">-->
+            <!--                    &lt;!&ndash;  <textarea id="1-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>&ndash;&gt;-->
+            <!--                </div>-->
+            <!--            </div>-->
         </div>
+    </div>
+    <div class="area-write">
+        <!--            <div class="form-floating mb-3">-->
+        <!--                <input type="title" class="form-control" id="title" placeholder="제 목">-->
+        <!--                <input type="name" class="form-control" id="name" placeholder="닉네임">-->
+        <!--            </div>-->
+        <textarea class="field" placeholder="댓글을 남겨주세요" name="comments" id="comments" cols="30"
+                  rows="10"></textarea>
+        <img src="images/send.png" alt="" onclick="writeComments()">
     </div>
 </div>
 </body>
