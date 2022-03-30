@@ -54,7 +54,8 @@
                                    ${modifiedAt}
                                </div>
                             </div>
-                        <h2 class='title' id="${id}-title">"${title}"</h2>
+                        <h3 class='title' id="${id}-title">"
+${title}"</h3>
                             <div class="contents" id="${id}-contents" >
                                ${contents}
                             </div>
@@ -119,16 +120,21 @@
         }
 
         .header h2 {
-            height: 33px;
-            font-size: 42px;
+            height: 80px;
+            font-size: 40px;
             font-weight: 500;
             font-stretch: normal;
             font-style: normal;
             line-height: 0.79;
             letter-spacing: -0.5px;
             text-align: center;
-            color: #ffffff;
-            margin-top: 100px;
+            color: black;
+            margin-top: 0px;
+        }
+        .header h3 {
+            font-size: 30px;
+            color: black;
+            margin-top: 0px;
         }
 
         .header p {
@@ -171,7 +177,7 @@
         }
 
         .card .metadata .date {
-            margin-left:2px;
+            margin-left:20px;
         }
 
         .card .metadata .name {

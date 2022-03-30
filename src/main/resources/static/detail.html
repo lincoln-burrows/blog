@@ -31,24 +31,26 @@
                     let title = post.title;
                     let contents = post.contents;
                     let modifiedAt = post.modifiedAt;
-                    addHTML(id, name, title, contents, modifiedAt);
+                    let username = post.username;
+                    addHTML(id, name, title, contents, modifiedAt, username);
                 }
             });
         }
 
         // 불러온 게시글을 html에 붙여줍니다.
-        function addHTML(id, name, title, contents, modifiedAt) {
-            let tempHtml = makeMessage(id, name, title, contents, modifiedAt);
+        function addHTML(id, name, title, contents, modifiedAt, username) {
+            let tempHtml = makeMessage(id, name, title, contents, modifiedAt, username);
             $('#cards-box').append(tempHtml);
         }
 
         // 게시글 형태를 만들어줍니다.
-        function makeMessage(id, name, title, contents, modifiedAt) {
-            return `<div class="card">
-                        <div class="metadata">
-                           <div id="${id}-name" class="name">
-                               ${name}
-                           </div>
+        function makeMessage(id, name, title, contents, modifiedAt, username) {
+            return `<a href="detail.html?id=${id}">
+                        <div class="card">
+                            <div class="metadata">
+                               <div ${id}="${id}-username" class="username">
+                                   ${username}
+                               </div>
                            <div class="date">
                                ${modifiedAt}
                            </div>
