@@ -8,15 +8,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HomeController {
-    @GetMapping("/")
+public class WriteController {
+    @GetMapping("/write")
 
 
-    public String home(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public String home1(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         if (userDetails==null) {
 //            System.out.println(model);
 //            System.out.println(userDetails);
-            return "index";
+            return "write";
         }
 
         model.addAttribute("username", userDetails.getUsername());
@@ -25,6 +25,6 @@ public class HomeController {
             model.addAttribute("admin_role", true);
         }
 
-        return "index";
+        return "write";
     }
 }

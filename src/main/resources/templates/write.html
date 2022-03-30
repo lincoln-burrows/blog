@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timeline Service</title>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" ></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
     <!--    font-family: 'Jua', sans-serif;-->
-    <script>
+    <script th:inline="javascript">
+
 
         function isValidContents(contents) {
             if (contents == '') {
@@ -21,19 +22,26 @@
 
         function writePost() {
             let contents = $('#contents').val();
-            let name = $('#name').val();
+            let username = [[${username}]];
+            // let username = $('#usernamez').val();
+            // let username = <span th:text="${username}"></span>
+            // /*<![CDATA[*/let username = "[[${username}]]";/*]]>*/
             let title = $('#title').val();
+
+
+
+
             if (isValidContents(contents) == false) {
                 return;
             }
-            if (isValidContents(name) == false) {
+            if (isValidContents(username) == false) {
                 return;
             }
             if (isValidContents(title) == false) {
                 return;
             }
 
-            let data = {'title': title, 'name': name, 'contents': contents};
+            let data = {'title': title, 'username': username, 'contents': contents};
             $.ajax({
                 type: "POST",
                 url: "/api/contents",
@@ -181,6 +189,7 @@
 </div>
 <div class="wrap">
     <div class="header">
+        <span id=usernamez th:text="${username}"></span>
         <h2>항해99 바다 위 대나무숲<br><br>
             맘껏 외치세요 무야호!</h2>
     </div>

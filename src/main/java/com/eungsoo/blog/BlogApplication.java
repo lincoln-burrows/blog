@@ -29,7 +29,7 @@ public class BlogApplication {
     @Bean
     public CommandLineRunner demo(ContentsRepository repository) {
         return (args) -> {
-            repository.save(new Contents("항해99", "선원1", "어푸어푸"));
+            repository.save(new Contents("항해99", "91JYpark", "어푸어푸"));
         };
     }
 

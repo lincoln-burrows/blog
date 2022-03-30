@@ -21,28 +21,30 @@ public class Contents extends Timestamped {
     private String title;
 
     @Column(nullable = false)
-    private String name;
+    private String username;
 
     @Column(nullable = false)
     private String contents;
 
-    public Contents(String title, String name, String contents) {
+
+
+    public Contents(String title, String username, String contents) {
         this.title = title;
-        this.name = name;
+        this.username = username;
         this.contents = contents;
     }
 
     // 게시글 생성
     public Contents(ContentsRequestDto requestDto) {
         this.title = requestDto.getTitle();
-        this.name = requestDto.getName();
+        this.username = requestDto.getUsername();
         this.contents = requestDto.getContents();
     }
 
     // 게시글 수정
     public void update(ContentsRequestDto requestDto) {
         this.title = requestDto.getTitle();
-        this.name = requestDto.getName();
+        this.username = requestDto.getUsername();
         this.contents = requestDto.getContents();
     }
 }
