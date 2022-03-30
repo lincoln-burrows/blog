@@ -37,25 +37,25 @@
             });
         }
         //서버단에서 댓글 불러오기
-        // function getComments() {
-        //     $('#cards-box').empty();
-        //     let idx = location.href.split("id=")[1]; //localhost/detail.html?id=12
-        //     $.ajax({
-        //         type: "GET",
-        //         url: `/api/contents/${idx}`,
-        //         data: {},
-        //         success: function (response) {
-        //             let post = response;
-        //             let id = post.id;
-        //             let name = post.name;
-        //             let title = post.title;
-        //             let contents = post.contents;
-        //             let modifiedAt = post.modifiedAt;
-        //             let username = post.username;
-        //             addHTML(id, name, title, contents, modifiedAt, username);
-        //         }
-        //     });
-
+        function getComments() {
+            $('#cards-box').empty();
+            let idx = location.href.split("id=")[1]; //localhost/detail.html?id=12
+            $.ajax({
+                type: "GET",
+                url: `/api/contents/${idx}`,
+                data: {},
+                success: function (response) {
+                    let post = response;
+                    let id = post.id;
+                    let name = post.name;
+                    let title = post.title;
+                    let contents = post.contents;
+                    let modifiedAt = post.modifiedAt;
+                    let username = post.username;
+                    addHTML(id, name, title, contents, modifiedAt, username);
+                }
+            });
+        }
 
 
         // 불러온 게시글을 html에 붙여줍니다.
