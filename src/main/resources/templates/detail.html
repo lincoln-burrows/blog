@@ -146,7 +146,9 @@
             console.log("addHTML2실행");
             let tempHtml = makeComment(id, username, contentsid, modifiedAt, comments);
             $('#comments-box').append(tempHtml);
+
         }
+
 
         // 게시글 형태를 만들어줍니다.
         function makeComment(id, username, contentsid, modifiedAt, comments) {
@@ -173,22 +175,41 @@
                 <textarea id="${id}-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>
             </div>
         </div>
-        <div class="footer1">
-            <img id="${id}-edit" class="icon-start-edit" src="images/edit.png" alt="" onclick="commentsupdate('${id}')">
-            <img id="${id}-delete" class="icon-delete" src="images/delete.png" alt="" onclick="deleteOne('${id}')">
-            <img id="${id}-submit" class="icon-end-edit" src="images/done.png" alt="" onclick="submitEdit('${id}')">
-        </div>`
-                    // <img src="images/edit.png" alt=""  align="left" onClick="commentsupdate('${id}')")>
-                    //        <img src="images/delete.png" alt="" onClick="deleteOne('${id}')" align="right">
-                    // </div>`;
+                    <div className="footer1" id="footer1">
+                <img id="${id}-edit" className="icon-start-edit" src="images/edit.png" alt=""
+                onClick="commentsupdate('${id}')">
+                    <img id="${id}-delete" className="icon-delete" src="images/delete.png" alt=""
+                onClick="deleteOne('${id}')">
+                    <img id="${id}-submit" className="icon-end-edit" src="images/done.png" alt=""
+                onClick="submitEdit('${id}', '${username}', '${contentsid}')" style="display:none">
+                    </div>`
+            // <img src="images/edit.png" alt=""  align="left" onClick="commentsupdate('${id}')")>
+            //        <img src="images/delete.png" alt="" onClick="deleteOne('${id}')" align="right">
+            // </div>`;
+
         }
+        // + authorityCheck('${id}', '${username}', '${contentsid}')
+        // function authorityCheck(id, username, contentsid) {
+        //     if (username == "[[${username}]]") {
+        //         return "`<div className="footer1" id="footer1">
+        //         <img id="${id}-edit" className="icon-start-edit" src="images/edit.png" alt=""
+        //         onClick="commentsupdate('${id}')">
+        //             <img id="${id}-delete" className="icon-delete" src="images/delete.png" alt=""
+        //         onClick="deleteOne('${id}')">
+        //             <img id="${id}-submit" className="icon-end-edit" src="images/done.png" alt=""
+        //         onClick="submitEdit('${id}', '${username}', '${contentsid}')">
+        //             </div>`"
+        //     }
+        //     return ""
+        // }
+
 
         //글 수정하기
         function commentsupdate(id) {
             showEdits(id);
             let comments = $(`#${id}-comments`).text().trim();
             $(`#${id}-textarea`).val(comments);
-            console.log(id);
+            console.log("업뎃첫번째함수");
         }
 
         function showEdits(id) {
@@ -201,21 +222,20 @@
         }
 
         // 메모를 수정합니다.
-        function submitEdit(id) {
+        function submitEdit(id, username, contentsid) {
             // 1. 작성 대상 메모의 username과 contents 를 확인합니다.
-            let username = $(`#${id}-username`).text().trim();
-            let contents = $(`#${id}-textarea`).val().trim();
-            let title = $(`#${id}-title`).text().trim();
+            let comments = $(`#${id}-textarea`).val().trim();
+            console.log(comments);
             // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
-            if (isValidContents(contents) == false) {
+            if (isValidContents(comments) == false) {
                 return;
             }
             // 3. 전달할 data JSON으로 만듭니다.
-            let data = {'username': username, 'contents': contents, 'title': title};
+            let data = {'username': username,'contentsid': contentsid,'comments': comments};
             // 4. PUT /api/memos/{id} 에 data를 전달합니다.
             $.ajax({
                 type: "PUT",
-                url: `/api/memos/${id}`,
+                url: `/api/comments/${id}`,
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (response) {
