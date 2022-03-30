@@ -111,28 +111,52 @@
                 }
             });
         }
-
-        //서버단에서 댓글 불러오기
+        // 댓글을 불러옵니다.
         function getComments() {
-            console.log("getComment실행");
             $('#comments-box').empty();
-            let idx = location.href.split("id=")[1]; //localhost/detail.html?id=12
+            let idx = location.href.split("id=")[1];
             $.ajax({
                 type: "GET",
                 url: "/api/comments",
                 data: {},
                 success: function (response) {
-                    let post = response;
-                    let id = post.id;
-                    let username = post.username;
-                    let contentsid = post.contentsid;
-                    let modifiedAt = post.modifiedAt;
-                    let comments = post.comments;
-                    console.log("post");
-                    addHTML2(id, username, contentsid, modifiedAt, comments);
+                    console.log(response);
+                    for (let i = 0; i < response.length; i++) {
+                        let post = response[i];
+                        let id = post.id;
+                        let username = post.username;
+                        let contentsid = post.contentsid;
+                        let modifiedAt = post.modifiedAt;
+                        let comments = post.comments;
+                        if(contentsid == idx){
+                            addHTML2(id, username, contentsid, modifiedAt, comments);
+                        }
+
+                    }
                 }
             });
         }
+        // //서버단에서 댓글 불러오기
+        // function getComments() {
+        //     console.log("getComment실행");
+        //     $('#comments-box').empty();
+        //     let idx = location.href.split("id=")[1]; //localhost/detail.html?id=12
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "/api/comments",
+        //         data: {},
+        //         success: function (response) {
+        //             let post = response;
+        //             let id = post.id;
+        //             let username = post.username;
+        //             let contentsid = post.contentsid;
+        //             let modifiedAt = post.modifiedAt;
+        //             let comments = post.comments;
+        //             console.log("post");
+        //             addHTML2(id, username, contentsid, modifiedAt, comments);
+        //         }
+        //     });
+        // }
         // 불러온 게시글을 html에 붙여줍니다.
         function addHTML2(id, username, contentsid, modifiedAt, comments) {
             console.log("addHTML2실행");
@@ -171,6 +195,13 @@
 
         body {
             margin: 0px;
+        }
+        .field{
+            width:538px;
+            height:100px;
+            resize:none;/* 크기고정 */
+            /*   resize: horizontal; // 가로크기만 조절가능
+                resize: vertical;  세로크기만 조절가능  */
         }
 
         .edit {
@@ -246,13 +277,14 @@
             color: #ffffff;
         }
 
+
         .area-write img {
             cursor: pointer;
             position: relative;
             width: 22.2px;
             height: 18.7px;
             bottom: 50px;
-            left: 500px;
+            left : 510px;
         }
 
         .card {
@@ -366,7 +398,7 @@
                   rows="10"></textarea>
         <img src="images/send.png" alt="" onclick="writeComments()">
     </div>
-    <div id="comment-box" class="area-read">
+    <div id="comments-box" class="area-read">
 
     </div>
 </div>
