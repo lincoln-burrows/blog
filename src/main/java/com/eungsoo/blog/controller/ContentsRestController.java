@@ -2,20 +2,20 @@ package com.eungsoo.blog.controller;
 
 
 import com.eungsoo.blog.models.Contents;
-import com.eungsoo.blog.repository.ContentsRepository;
+import com.eungsoo.blog.repository.CommentsRepository;
 import com.eungsoo.blog.models.ContentsRequestDto;
+import com.eungsoo.blog.repository.ContentsRepository;
 import com.eungsoo.blog.service.ContentsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
 public class ContentsRestController {
 
-    private final ContentsRepository ContentsRepository;
+    private final com.eungsoo.blog.repository.ContentsRepository ContentsRepository;
     private final ContentsService ContentsService;
 
     // 게시글 전체 조회

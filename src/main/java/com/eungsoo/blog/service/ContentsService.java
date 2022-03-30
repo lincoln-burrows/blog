@@ -1,8 +1,9 @@
 package com.eungsoo.blog.service;
 
 import com.eungsoo.blog.models.Contents;
-import com.eungsoo.blog.repository.ContentsRepository;
+import com.eungsoo.blog.repository.CommentsRepository;
 import com.eungsoo.blog.models.ContentsRequestDto;
+import com.eungsoo.blog.repository.ContentsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -14,6 +14,7 @@
     <script>
         $(document).ready(function () {
             getMessages();
+            getComments();
         })
 
         // 게시글을 불러옵니다.
@@ -36,26 +37,7 @@
                 }
             });
         }
-        //서버단에서 댓글 불러오기
-        function getComments() {
-            $('#cards-box').empty();
-            let idx = location.href.split("id=")[1]; //localhost/detail.html?id=12
-            $.ajax({
-                type: "GET",
-                url: `/api/contents/${idx}`,
-                data: {},
-                success: function (response) {
-                    let post = response;
-                    let id = post.id;
-                    let name = post.name;
-                    let title = post.title;
-                    let contents = post.contents;
-                    let modifiedAt = post.modifiedAt;
-                    let username = post.username;
-                    addHTML(id, name, title, contents, modifiedAt, username);
-                }
-            });
-        }
+
 
 
         // 불러온 게시글을 html에 붙여줍니다.
@@ -83,6 +65,14 @@
                     </div>`;
         }
 
+        function isValidContents(contents) {
+            if (contents == '') {
+                alert('내용을 입력해주세요');
+                return false;
+            }
+            return true;
+        }
+
         function writeComments() {
 
             let comments = $('#comments').val();
@@ -90,7 +80,8 @@
             // let username = $('#usernamez').val();
             // let username = <span th:text="${username}"></span>
             // /*<![CDATA[*/let username = "[[${username}]]";/*]]>*/
-            let title = $('#title').val();
+            let contentsid = location.href.split("id=")[1]; //localhost/detail.html?id=12
+            // let idx = location.href.split("id=")[1]; //localhost/detail.html?id=12
 
 
             if (isValidContents(comments) == false) {
@@ -99,25 +90,73 @@
             if (isValidContents(username) == false) {
                 return;
             }
-            if (isValidContents(title) == false) {
+            if (isValidContents(contentsid) == false) {
                 return;
             }
 
-            let data = {'title': title, 'username': username, 'contents': contents};
+            let data = {'contentsid': contentsid, 'username': username, 'comments': comments};
             $.ajax({
                 type: "POST",
-                url: "/api/contents",
+                url: "/api/comments",
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (response) {
                     alert('메시지가 성공적으로 작성되었습니다.');
-                    location.href = '/';
+                    location.reload();
+                    // `/api/contents/${idx}`
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert(xhr.status);
                     alert(thrownError);
                 }
             });
+        }
+
+        //서버단에서 댓글 불러오기
+        function getComments() {
+            console.log("getComment실행");
+            $('#comments-box').empty();
+            let idx = location.href.split("id=")[1]; //localhost/detail.html?id=12
+            $.ajax({
+                type: "GET",
+                url: "/api/comments",
+                data: {},
+                success: function (response) {
+                    let post = response;
+                    let id = post.id;
+                    let username = post.username;
+                    let contentsid = post.contentsid;
+                    let modifiedAt = post.modifiedAt;
+                    let comments = post.comments;
+                    console.log("post");
+                    addHTML2(id, username, contentsid, modifiedAt, comments);
+                }
+            });
+        }
+        // 불러온 게시글을 html에 붙여줍니다.
+        function addHTML2(id, username, contentsid, modifiedAt, comments) {
+            console.log("addHTML2실행");
+            let tempHtml = makeComment(id, username, contentsid, modifiedAt, comments);
+            $('#comments-box').append(tempHtml);
+        }
+
+        // 게시글 형태를 만들어줍니다.
+        function makeComment(id, username, contentsid, modifiedAt, comments) {
+            console.log("makeComment실행");
+            return `<a>
+                        <div class="card">
+                            <div class="metadata">
+                               <div ${id}="${id}-username" class="username">
+                                   ${username}
+                               </div>
+                           <div class="date">
+                               ${modifiedAt}
+                           </div>
+                        </div>
+                        <div class="comments" id="${id}-comments" >
+                           ${comments}
+                        </div>
+                    </div>`;
         }
 
 
@@ -326,6 +365,9 @@
         <textarea class="field" placeholder="댓글을 남겨주세요" name="comments" id="comments" cols="30"
                   rows="10"></textarea>
         <img src="images/send.png" alt="" onclick="writeComments()">
+    </div>
+    <div id="comment-box" class="area-read">
+
     </div>
 </div>
 </body>

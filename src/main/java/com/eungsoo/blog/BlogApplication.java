@@ -1,6 +1,7 @@
 package com.eungsoo.blog;
 
 import com.eungsoo.blog.models.Contents;
+import com.eungsoo.blog.repository.CommentsRepository;
 import com.eungsoo.blog.repository.ContentsRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
