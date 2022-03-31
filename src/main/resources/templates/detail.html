@@ -86,7 +86,11 @@
         }
 
         function writeComments() {
-
+            if ("[[${username}]]"==""){
+                alert('로그인이 필요한 기능입니다.')
+                location.href='/user/login'
+                return;
+            }
             let comments = $('#comments').val();
             let username = "[[${username}]]";
             // let username = $('#usernamez').val();
