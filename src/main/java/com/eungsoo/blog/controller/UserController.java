@@ -31,6 +31,9 @@ public class UserController {
     // 회원 가입 페이지
     @GetMapping("/user/signup")
     public String signup() {
+//        if (password!=passwordCheck){
+//            return "not correct";
+
         return "signup";
     }
 

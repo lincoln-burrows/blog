@@ -24,21 +24,92 @@
         box.style.display = "none";
       }
     }
+// 유효성 검사
+    function Validation() {
+      var RegExp = /^[a-zA-Z0-9]{3,}$/; //id와 pwassword 유효성 검사 정규식
+      var RegExp2 = /^[a-zA-Z0-9]{4,}$/; //id와 pwassword 유효성 검사 정규식
+      var jnumSum = 0; //objNum[i] * jnumplus[i] 더한 값
+
+      var objId = document.getElementById("nickName"); //아이디
+      var objPwd = document.getElementById("pwd"); //비밀번호
+      var objPwd2 = document.getElementById("pwd2");
+      var objemail = document.getElementById("email"); //비밀번호확인
+
+      // ================ ID 유효성검사 ================ //
+
+      if (objId.value == '') {
+        alert("닉네임을 입력해주세요.");
+        return false;
+      }
+      if (!RegExp.test(objId.value)) { //아이디 유효성검사
+        alert("ID는 3자 이상, 영문 대소문자와 숫자로만 입력하여 주세요.");
+        return false;
+      }
+
+      // ================ PASSWORD 유효성검사 ===============//
+      if (objPwd.value == '') { // 비밀번호 입력여부 검사
+        alert("Password를 입력해주세요.");
+        return false;
+      }
+
+
+      if (!RegExp2.test(objPwd.value)) { //아이디 유효성검사
+        alert("비밀번호는 4자 이상, 영문 대소문자와 숫자로만 입력하여 주세요.");
+        return false;
+      }
+
+      //패스워드가 ID를 포함하는지 검사
+      if (objPwd.value.includes(objId.value)) {
+
+        alert("Password는 닉네임을 포함하지 말아주세요.");
+        return false;
+      }
+
+      if (objPwd2.value == '') { // 비밀번호확인 입력여부 검사
+        alert("비밀번호 확인을 입력해주세요.");
+        return false;
+      }
+
+      if (objPwd2.value != objPwd.value) { //비밀번호와 비밀번호확인이 동일한지 검사
+        alert("비밀번호 입력이 일치하지 않습니다. 다시 입력해주세요.");
+        return false;
+      }
+      if (objemail.value == '') { // 비밀번호확인 입력여부 검사
+        alert("이메일을 입력해주세요.");
+        return false;
+      }
+    }
+      //
+      // // ================ email 유효성검사 ================ //
+      // if(e_RegExp.value == ''){ // 이메일 입력여부 검사
+      //   alert("이메일을 입력해주세요.");
+      //   return false;
+      // }
+
+
+
   </script>
 </head>
 <body>
 <div id="login-form">
   <div id="login-title">Sign up Select Shop</div>
 
-  <form action="/user/signup" method="post">
-    <div class="login-id-label">Username</div>
-    <input type="text" name="username" placeholder="Username" class="login-input-box">
+  <form action="/user/signup" method="post" onsubmit="return Validation();">
 
-    <div class="login-id-label">Password</div>
-    <input type="password" name="password" class="login-input-box">
+    <div class="login-id-label">닉네임</div>
+    <a> 닉네임은 3자 이상의 영문 대소문자와 숫자로만 입력하여 주세요.</a>
+    <input type="text" id="nickName" name="username" placeholder="Username" class="login-input-box">
+
+    <div class="login-id-label">비밀번호</div>
+    <a> 비밀번호는 4자 이상이며, 4자 이상의 영문 대소문자와 숫자이며, 닉네임과 같은 값을 포함하지 말아주세요.</a>
+    <input type="password" id="pwd" name="password" class="login-input-box">
+
+    <div class="login-id-label">비밀번호 확인</div>
+    <input type="text" id="pwd2" name="passwordCheck" class="login-input-box">
 
     <div class="login-id-label">E-mail</div>
-    <input type="text" name="email" placeholder="E-mail" class="login-input-box">
+    <a> </a>
+    <input type="text" id="email" name="email" placeholder="E-mail" class="login-input-box">
 
     <button id="login-id-submit">회원 가입</button>
   </form>
