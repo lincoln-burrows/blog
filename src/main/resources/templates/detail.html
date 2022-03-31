@@ -144,16 +144,9 @@
         // 불러온 게시글을 html에 붙여줍니다.
         function addHTML2(id, username, contentsid, modifiedAt, comments) {
             console.log("addHTML2실행");
-            let tempHtml = makeComment(id, username, contentsid, modifiedAt, comments);
-            $('#comments-box').append(tempHtml);
-
-        }
-
-
-        // 게시글 형태를 만들어줍니다.
-        function makeComment(id, username, contentsid, modifiedAt, comments) {
-            console.log("makeComment실행");
-            return `<a>
+            let tempHtml = ``
+            if(username == "[[${username}]]"){
+                tempHtml = `<a>
                         <div class="card">
                             <div class="metadata">
                                <div ${id}="${id}-username" class="username">
@@ -183,25 +176,34 @@
                     <img id="${id}-submit" className="icon-end-edit" src="images/done.png" alt=""
                 onClick="submitEdit('${id}', '${username}', '${contentsid}')" style="display:none">
                     </div>`
-            // <img src="images/edit.png" alt=""  align="left" onClick="commentsupdate('${id}')")>
-            //        <img src="images/delete.png" alt="" onClick="deleteOne('${id}')" align="right">
-            // </div>`;
+            }
+            else{
+                tempHtml = `<a>
+                        <div class="card">
+                            <div class="metadata">
+                               <div ${id}="${id}-username" class="username">
+                                   ${username}
+                               </div>
+                           <div class="date">
+                               ${modifiedAt}
+                           </div>
+                        </div>
+                        <div class="comments" id="${id}-comments" >
+                           ${comments}
+                        </div>
+                        <!-- contents 조회/수정 영역-->
+        <div class="editedcomments">
+            <div id="${id}-editedcomments" class="text is-hidden">
+                ${comments}
+            </div>
+            <div id="${id}-editarea" class="edit">
+                <textarea id="${id}-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>
+            </div>
+        </div>`
+            }
+            $('#comments-box').append(tempHtml);
 
         }
-        // + authorityCheck('${id}', '${username}', '${contentsid}')
-        // function authorityCheck(id, username, contentsid) {
-        //     if (username == "[[${username}]]") {
-        //         return "`<div className="footer1" id="footer1">
-        //         <img id="${id}-edit" className="icon-start-edit" src="images/edit.png" alt=""
-        //         onClick="commentsupdate('${id}')">
-        //             <img id="${id}-delete" className="icon-delete" src="images/delete.png" alt=""
-        //         onClick="deleteOne('${id}')">
-        //             <img id="${id}-submit" className="icon-end-edit" src="images/done.png" alt=""
-        //         onClick="submitEdit('${id}', '${username}', '${contentsid}')">
-        //             </div>`"
-        //     }
-        //     return ""
-        // }
 
 
         //글 수정하기
