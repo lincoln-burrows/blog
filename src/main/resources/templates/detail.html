@@ -77,6 +77,14 @@
             return true;
         }
 
+        function isValidComments(comments) {
+            if (comments == '') {
+                alert('댓글 내용을 입력해주세요');
+                return false;
+            }
+            return true;
+        }
+
         function writeComments() {
 
             let comments = $('#comments').val();
@@ -172,7 +180,7 @@
                 <img id="${id}-edit" className="icon-start-edit" src="images/edit.png" alt=""
                 onClick="commentsupdate('${id}')">
                     <img id="${id}-delete" className="icon-delete" src="images/delete.png" alt=""
-                onClick="deleteOne('${id}')">
+                onClick="confirmationCheck('${id}')">
                     <img id="${id}-submit" className="icon-end-edit" src="images/done.png" alt=""
                 onClick="submitEdit('${id}', '${username}', '${contentsid}')" style="display:none">
                     </div>`
@@ -206,12 +214,12 @@
         }
 
 
-        //글 수정하기
+        //댓글 수정하기
         function commentsupdate(id) {
             showEdits(id);
             let comments = $(`#${id}-comments`).text().trim();
             $(`#${id}-textarea`).val(comments);
-            console.log("업뎃첫번째함수");
+
         }
 
         function showEdits(id) {
@@ -229,7 +237,7 @@
             let comments = $(`#${id}-textarea`).val().trim();
             console.log(comments);
             // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
-            if (isValidContents(comments) == false) {
+            if (isValidComments(comments) == false) {
                 return;
             }
             // 3. 전달할 data JSON으로 만듭니다.
@@ -245,6 +253,20 @@
                     window.location.reload();
                 }
             });
+        }
+
+
+        function confirmationCheck(id){
+            var result = confirm("실행하시겠어요 ?");
+
+            if(result)
+            {
+                deleteOne(id);
+            }
+            else
+            {
+                window.location.reload();
+            }
         }
 
         // 1. DELETE /api/memos/{id} 에 요청해서 메모를 삭제합니다.
