@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
     <!--    font-family: 'Jua', sans-serif;-->
-    <script>
+    <script th:inline="javascript">
         $(document).ready(function () {
             getMessages();
         })
@@ -229,16 +229,17 @@ ${title}"</h3>
 <div class="wrap">
     <div class="header">
         <div id="header-title-login-user1">
-            <span th:text="${username}"></span> 님의
+            <span th:text="${username}"></span>
+            <a sec:authorize="isAuthenticated()">님의</a>
             <form id="my_form" method="post" action="/user/logout">
-                <a id="logout-text" href="javascript:{}" onclick="document.getElementById('my_form').submit();">로그아웃</a>
+                <a sec:authorize="isAuthenticated()" id="logout-text" href="javascript:{}" onclick="document.getElementById('my_form').submit();">로그아웃</a>
             </form>
         </div>
         <h2>항해99 바다 위 갑판낚시터<br><br>
             맘껏 외치세요 무야호!</h2>
         <div class="to-write1">
-            <button type="button" class="btn btn-primary" onclick="location.href='/user/login'"><b>로그인</b></button>
-            <button type="button" class="btn btn-primary" onclick="location.href='write'"><b>글 쓰 기</b></button>
+            <button sec:authorize="!isAuthenticated()" type="button" class="btn btn-primary" onclick="location.href='/user/login'"><b>로그인</b></button>
+                <button type="button" class="btn btn-primary" onclick="location.href='write'"><b>글 쓰 기</b></button>
         </div>
 
     <div id="cards-box" class="area-read">
